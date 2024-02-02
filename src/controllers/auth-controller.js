@@ -1,16 +1,16 @@
 const catchError = require("../utils/catch-error");
-const userService = require("../services/user-service");
 const createError = require("../utils/create-error");
+const userService = require("../services/user-service");
 const hashService = require("../services/hash-service");
 const jwtService = require("../services/jwt-service");
 
 exports.register = catchError(async (req, res, next) => {
-  //   throw new Error("test catch error function");
-  const existUser = await userService.findUserByEmailOrMobile(
+  console.log(req.body.email, req.body.mobile);
+  const existsUser = await userService.findUserByEmailOrMobile(
     req.body.email || req.body.mobile
   );
-  if (existUser) {
-    createError("email address or mobile number already in use", 400);
+  if (existsUser) {
+    createError("EMAIL_MOBILE_IN_USE", 400);
     // const error = new Error("email address or mobile number already in use");
     // error.statusCode = 400;
     // throw error;
@@ -19,6 +19,6 @@ exports.register = catchError(async (req, res, next) => {
   const newUser = await userService.createUser(req.body);
   const payload = { userId: newUser.id };
   const accessToken = jwtService.sign(payload);
-
-  res.status(201).json({ accessToken });
+  delete newUser.password;
+  res.status(201).json({ accessToken, newUser });
 });
