@@ -22,3 +22,23 @@ exports.register = catchError(async (req, res, next) => {
   delete newUser.password;
   res.status(201).json({ accessToken, newUser });
 });
+
+exports.login = catchError(async (req, res, next) => {
+  const existsUser = await userService.findUserByEmailOrMobile(
+    req.body.emailOrMobile
+  );
+  if (!existsUser) {
+    createError("invalid credentials", 400);
+  }
+  const isMatch = await hashService.compare(
+    req.body.password,
+    existsUser.password
+  );
+  if (!isMatch) {
+    createError("invalid credentials", 400);
+  }
+  const payload = { userId: existsUser.id };
+  const accessToken = jwtService.sign(payload);
+  delete existsUser.password;
+  res.status(201).json({ accessToken, user: existsUser });
+});
