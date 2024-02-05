@@ -43,3 +43,11 @@ RESPONSE
 {
     message             String      server error message
 }
+
+GET        /auth/me            get Authenticated user data
+HEADERS
+    AUTHORIZATION   Bearer [JWT]
+RESPONSE
+200 {user: {id, firstName, lastName, email, mobile, profileImage, coverImage, createdAt, updatedAt}}
+401 {message: 'unauthenticated'}
+500 {message: 'internal server error'}

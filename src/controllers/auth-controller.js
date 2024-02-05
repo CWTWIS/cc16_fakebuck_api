@@ -42,3 +42,6 @@ exports.login = catchError(async (req, res, next) => {
   delete existsUser.password;
   res.status(201).json({ accessToken, user: existsUser });
 });
+exports.getMe = (req, res, next) => {
+  res.status(200).json({ user: req.user });
+};
