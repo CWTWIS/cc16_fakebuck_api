@@ -15,11 +15,21 @@ app.use(express.json());
 app.use(limiter);
 app.use(morgan("dev"));
 
-// app.use((req, res) => {
-//   throw new Error("test middleware error");
-// });
-// app.use((req, res) => res.json("sent leaw"));
 app.use("/auth", authRoute);
+
+app.post(
+  "/upload",
+  require("./middleware/upload").fields([
+    { name: "profileImage", maxCount: 1 },
+    { name: "coverImage", maxCount: 1 },
+  ]),
+  (req, res, next) => {
+    console.log(req.file);
+    console.log("================");
+    console.log(req.files);
+  }
+);
+
 app.use(notFound);
 app.use(error);
 
