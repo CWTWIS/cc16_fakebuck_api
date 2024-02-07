@@ -10,20 +10,23 @@ exports.updateUser = catchError(async (req, res, next) => {
     createError("profile image or cover image is required", 400);
   }
   const data = {};
+  //   const arrayPromise = [];
   if (req.files.profileImage) {
     data.profileImage = await uploadService.upload(
       req.files.profileImage[0].path
     );
+    // arrPromise.push(uploadService.upload(req.files.profileImage[0].path));
   }
   if (req.files.coverImage) {
     data.coverImage = await uploadService.upload(req.files.coverImage[0].path);
+    // arrPromise.push(uploadService.upload(req.files.coverImage[0].path))
   }
 
-  const [resultP1, resultP2, resultP3] = await Promise.all([
-    promise1,
-    promise2,
-    promise3,
-  ]);
+  //   const [resultP1, resultP2, resultP3] = await Promise.all([
+  //     promise1,
+  //     promise2,
+  //     promise3,
+  //   ]);
 
   await userService.updateUserById(data, req.user.id);
   res.status(200).json({ message: "success" });
