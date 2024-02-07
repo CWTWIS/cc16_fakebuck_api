@@ -51,3 +51,15 @@ RESPONSE
 200 {user: {id, firstName, lastName, email, mobile, profileImage, coverImage, createdAt, updatedAt}}
 401 {message: 'unauthenticated'}
 500 {message: 'internal server error'}
+
+PATCH /users       update user profile
+HEADERS
+    AUTHORIZATION   Bearer [JWT]
+REQUEST BODY        multipart/form-data
+    profileImage?   
+    coverImage?
+RESPONSE
+200 {}
+400 {message: 'unexpected field'}
+401 {message: 'unauthenticated'}
+500 {message: 'internal server error'}
