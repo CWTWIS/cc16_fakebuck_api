@@ -1,7 +1,7 @@
 const catchError = require("../utils/catch-error");
 
 exports.requestFriend = catchError(async (req, res, next) => {
-  res.status(200).json({ message: "requestFriend" });
+  res.status(200).json(req.params);
 });
 exports.confirmRequest = catchError(async (req, res, next) => {
   res.status(200).json({ message: "confirmRequest" });

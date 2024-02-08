@@ -4,7 +4,13 @@ const createError = require("../utils/create-error");
 const userService = require("../services/user-service");
 const uploadService = require("../services/upload-service");
 
-const cloudinary = require("../config/cloudinary");
+exports.checkExistUser = catchError(async (req, res, next) => {
+  const existUser = await userService.findUserById(+req.params.targetUserId);
+  if (!existUser) {
+    createError("user was not found", 400);
+  }
+  next();
+});
 
 exports.updateUser = catchError(async (req, res, next) => {
   if (!req.files) {
