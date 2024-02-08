@@ -2,19 +2,14 @@ const express = require("express");
 const relationshipController = require("../controllers/relationship-controller");
 const router = express.Router();
 
-router.post("/users/:targetUserId", relationshipController.requestFriend);
-router.patch(
-  "/users/:targetUserId/confirm",
-  relationshipController.confirmRequest
-);
-router.patch(
-  "/users/:targetUserId/reject",
-  relationshipController.rejectRequest
-);
-router.patch(
-  "/users/:targetUserId/cancel",
-  relationshipController.cancelRequest
-);
-router.patch("/users/:targetUserId/unfriend", relationshipController.unfriend);
+const subRouter = express.Router();
+
+router.use("/users/:targetUserId", subRouter);
+
+subRouter.post("/", relationshipController.requestFriend);
+subRouter.patch("/confirm", relationshipController.confirmRequest);
+subRouter.patch("/reject", relationshipController.rejectRequest);
+subRouter.patch("/cancel", relationshipController.cancelRequest);
+subRouter.patch("/unfriend", relationshipController.unfriend);
 
 module.exports = router;
