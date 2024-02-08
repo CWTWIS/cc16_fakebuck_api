@@ -23,5 +23,5 @@ exports.updateUser = catchError(async (req, res, next) => {
   }
 
   await userService.updateUserById(data, req.user.id);
-  res.status(200).json({ message: "success" });
+  res.status(200).json(data);
 });

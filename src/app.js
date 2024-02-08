@@ -9,6 +9,7 @@ const notFound = require("./middleware/not-found");
 const authenticate = require("./middleware/authenticate");
 const authRoute = require("./routes/auth-route");
 const userRoute = require("./routes/user-route");
+const relationshipsRoute = require("./routes/relationship-route");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/public", express.static("public"));
 
 app.use("/auth", authRoute);
 app.use("/users", authenticate, userRoute);
+app.use("/relationships", authenticate, relationshipsRoute);
 
 app.use(notFound);
 app.use(error);
