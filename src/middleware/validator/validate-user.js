@@ -9,6 +9,6 @@ exports.validateTargetUserId = (req, res, next) => {
   if (error) {
     throw error;
   }
-  req.params = value;
+  req.targetUserId = value.targetUserId;
   next();
 };

@@ -5,7 +5,8 @@ const userService = require("../services/user-service");
 const uploadService = require("../services/upload-service");
 
 exports.checkExistUser = catchError(async (req, res, next) => {
-  const existUser = await userService.findUserById(+req.params.targetUserId);
+  const existUser = await userService.findUserById(req.targetUserId);
+  console.log(req.targetUserId);
   if (!existUser) {
     createError("user was not found", 400);
   }
