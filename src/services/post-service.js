@@ -22,11 +22,28 @@ exports.findPostIncludeFriendPostByUsersId = async (userId) => {
       userId: {
         in: [userId, ...friendsId],
       },
+      deletedAt: null,
     },
     orderBy: { createdAt: "desc" },
     include: {
       user: { select: userFilter },
+      likes: {
+        where: {
+          deletedAt: null,
+        },
+      },
     },
   });
   return posts;
 };
+
+exports.increaseLike = (postId) =>
+  prisma.post.update({
+    where: { id: postId },
+    data: { totalLike: { increment: 1 } },
+  });
+exports.decreaseLike = (postId) =>
+  prisma.post.update({
+    where: { id: postId },
+    data: { totalLike: { decrement: 1 } },
+  });
