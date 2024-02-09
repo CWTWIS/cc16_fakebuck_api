@@ -86,5 +86,17 @@ RESPONSE
 200 {message: 'success request'}
 400 {message: 'invalid relationships between 2 users'}
 401 {message: 'unauthenticated'}
-401 {message: 'cannot accept your request'} 
+403 {message: 'cannot accept your request'} 
+500 {message: 'internal server error'}
+
+POST        /posts      create a new posts
+HEADERS
+    AUTHORIZATION   Bearer[JWT]
+REQUEST BODY        multipart/form-data
+    title?           String (at least 1 of title or image)
+    image?           blob
+RESPONSE
+200 {post: new post object}
+400 {message: 'invalid input'}
+401 {message: 'unauthenticated'}
 500 {message: 'internal server error'}
