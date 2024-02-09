@@ -11,4 +11,6 @@ router.post(
   postController.createPost
 );
 
+router.get("/friends", postController.getAllPostIncludeFriendPosts);
+
 module.exports = router;

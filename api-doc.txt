@@ -100,3 +100,11 @@ RESPONSE
 400 {message: 'invalid input'}
 401 {message: 'unauthenticated'}
 500 {message: 'internal server error'}
+
+GET     /posts  Get my post and friend post
+HEADERS
+    AUTHORIZATION   Bearer[JWT]
+RESPONSE
+200 {post: [post object]}
+401 {message: 'unauthenticated'}
+500 {message: 'internal server error'}
